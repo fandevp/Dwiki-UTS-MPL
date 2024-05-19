@@ -1,75 +1,80 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
+class TeksUtama extends StatefulWidget {
+  final state = StateTeksUtama();
+
+  TeksUtama({super.key});
+
+  @override
+  State<StatefulWidget> createState() => state;
 }
 
-class MyApp extends StatelessWidget {
+class StateTeksUtama extends State<TeksUtama> {
+  var listNama = [
+    'DWIKI LUKITO',
+    'AYU SETIYOWATI',
+    'WIDYANTIKA',
+    'ALIF IRVAN IRAWAN',
+    'FADEL ALIF AFRIZAL',
+  ];
+  var listWarna = [
+    Colors.blue,
+    Colors.red,
+    Colors.green,
+    Colors.yellow,
+    Colors.blueGrey,
+  ];
+  int index = 0;
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return Column(
+      children: [
+        const SizedBox(height: 16.0),
+        Text(
+          'Apa kabar',
+          textDirection: TextDirection.ltr,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        Text(
+          textAlign: TextAlign.center,
+          listNama[index % listNama.length],
+          textDirection: TextDirection.ltr,
+          style: TextStyle(
+            fontSize: 45,
+            fontWeight: FontWeight.bold,
+            color: listWarna[index % listWarna.length],
+          ),
+        )
+      ],
+    );
+  }
+
+  void incrementIndex() {
+    setState(() {
+      index++;
+    });
+  }
+}
+
+void main() {
+  TeksUtama teksUtama = TeksUtama();
+  runApp(MaterialApp(
+      title: 'Halo Dunia',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Hallo Dunia'),
-          backgroundColor: Color(0xFF57A7D5),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TeksUtama(teks1: 'TRIA BELA SISILIANA', teks2: 'NIM: STI202102213'),
-            TeksUtama(teks1: 'AULIYA AHDA WANNURA', teks2: 'NIM: STI202102214'),
-            TeksUtama(
-              teks1: 'DWIKI LUKITO ',
-              teks2: 'NIM: STI202102216',
-              backgroundColor: Color.fromARGB(255, 163, 255, 142),
-            ),
-            TeksUtama(teks1: 'AYU SETIYOWATI', teks2: 'NIM: STI202102218'),
-            TeksUtama(teks1: 'WIDYANTIKA', teks2: 'NIM: STI202102220'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class TeksUtama extends StatelessWidget {
-  final String teks1;
-  final String teks2;
-  final Color? backgroundColor;
-
-  TeksUtama({
-    required this.teks1,
-    required this.teks2,
-    this.backgroundColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: backgroundColor,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            teks1,
-            style: TextStyle(
-              fontSize: 21,
-              fontWeight: FontWeight.bold,
-              color: const Color.fromARGB(255, 9, 9, 9),
-            ),
+          centerTitle: true,
+          backgroundColor: Colors.blue[800],
+          title: const Text(
+            'Halo Dunia',
+            style: TextStyle(color: Colors.white),
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-                bottom: 8.0), // Atur padding di bagian bawah
-            child: Text(
-              teks2,
-              style: TextStyle(
-                color: const Color.fromARGB(255, 9, 9, 9),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+        ),
+        body: Center(child: teksUtama),
+        floatingActionButton: FloatingActionButton(
+          tooltip: 'Random',
+          onPressed: teksUtama.state.incrementIndex,
+          child: const Icon(Icons.refresh),
+        ),
+      )));
 }
